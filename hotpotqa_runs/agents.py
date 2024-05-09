@@ -6,6 +6,7 @@ from langchain import OpenAI, Wikipedia
 from langchain.llms.base import BaseLLM
 from langchain.chat_models import ChatOpenAI
 from langchain.chat_models.base import BaseChatModel
+
 from langchain.schema import (
     SystemMessage,
     HumanMessage,
@@ -19,6 +20,8 @@ from prompts import reflect_prompt, react_agent_prompt, react_reflect_agent_prom
 from prompts import cot_agent_prompt, cot_reflect_agent_prompt, cot_reflect_prompt, COT_INSTRUCTION, COT_REFLECT_INSTRUCTION
 from fewshots import WEBTHINK_SIMPLE6, REFLECTIONS, COT, COT_REFLECT
 
+
+API_KEY = "#####"
 
 class ReflexionStrategy(Enum):
     """
@@ -47,13 +50,13 @@ class CoTAgent:
                                             max_tokens=250,
                                             model_name="gpt-3.5-turbo",
                                             model_kwargs={"stop": "\n"},
-                                            openai_api_key=os.environ['OPENAI_API_KEY']),
+                                            openai_api_key=API_KEY),
                     action_llm: AnyOpenAILLM = AnyOpenAILLM(
                                             temperature=0,
                                             max_tokens=250,
                                             model_name="gpt-3.5-turbo",
                                             model_kwargs={"stop": "\n"},
-                                            openai_api_key=os.environ['OPENAI_API_KEY']),
+                                            openai_api_key=API_KEY),
                     ) -> None:
         self.question = question
         self.context = context
@@ -80,28 +83,28 @@ class CoTAgent:
 
     def step(self) -> None:
         # Think
-        self.scratchpad += f'\nThought:'
+        self.scratchpad += f':فكرة\n '
         self.scratchpad += ' ' + self.prompt_agent()
         print(self.scratchpad.split('\n')[-1])
 
         # Act
-        self.scratchpad += f'\nAction:'
+        self.scratchpad += f':إجراء\n '
         action = self.prompt_agent()
         self.scratchpad += ' ' + action
         action_type, argument = parse_action(action)
         print(self.scratchpad.split('\n')[-1])  
 
-        self.scratchpad += f'\nObservation: '
-        if action_type == 'Finish':
+        self.scratchpad += f':ملاحظة\n ' 
+        if action_type == 'انهاء':
             self.answer = argument
             if self.is_correct():
-                self.scratchpad += 'Answer is CORRECT'
+                self.scratchpad += 'الاجابة صحيحة'
             else: 
-                self.scratchpad += 'Answer is INCORRECT'
+                self.scratchpad += 'الاجابة خاطئة'
             self.finished = True
             return
         else:
-            print('Invalid action type, please try again.')
+            print(' إجراء غير صالح، يرجى المحاولة مرة أخرى')
     
     def reflect(self,
                 strategy: ReflexionStrategy) -> None:
