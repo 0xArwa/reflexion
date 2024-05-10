@@ -41,10 +41,19 @@ class CoTAgent:
                     question: str,
                     context: str,
                     key: str,
+                    #------------NOTE-----------#
                     agent_prompt: PromptTemplate = cot_reflect_agent_prompt,
+                    # predefined templates for generating prompts
+                    # A template may include instructions, few-shot examples, 
+                    # and specific context and questions appropriate for a given task.
+                    # docs: https://python.langchain.com/v0.1/docs/modules/model_io/prompts/quick_start/
                     reflect_prompt: PromptTemplate = cot_reflect_prompt,
-                    cot_examples: str = COT,
-                    reflect_examples: str = COT_REFLECT,
+                    #------------NOTE-----------#
+
+                    cot_examples: str = COT, # few-shots examples
+                    reflect_examples: str = COT_REFLECT, # few-shots examples
+
+                    #--------OpenAI API config--------#
                     self_reflect_llm: AnyOpenAILLM = AnyOpenAILLM(
                                             temperature=0,
                                             max_tokens=250,
@@ -57,6 +66,7 @@ class CoTAgent:
                                             model_name="gpt-3.5-turbo",
                                             model_kwargs={"stop": "\n"},
                                             openai_api_key=API_KEY),
+
                     ) -> None:
         self.question = question
         self.context = context
@@ -75,6 +85,7 @@ class CoTAgent:
 
     def run(self,
             reflexion_strategy: ReflexionStrategy = ReflexionStrategy.REFLEXION) -> None:
+        # repeat until answer is correct
         if self.step_n > 0 and not self.is_correct() and reflexion_strategy != ReflexionStrategy.NONE:
             self.reflect(reflexion_strategy)
         self.reset()
@@ -83,28 +94,28 @@ class CoTAgent:
 
     def step(self) -> None:
         # Think
-        self.scratchpad += f':فكرة\n '
+        self.scratchpad += f'\nThought:'
         self.scratchpad += ' ' + self.prompt_agent()
         print(self.scratchpad.split('\n')[-1])
 
         # Act
-        self.scratchpad += f':إجراء\n '
+        self.scratchpad += f'\nAction:'
         action = self.prompt_agent()
         self.scratchpad += ' ' + action
         action_type, argument = parse_action(action)
         print(self.scratchpad.split('\n')[-1])  
 
-        self.scratchpad += f':ملاحظة\n ' 
-        if action_type == 'انهاء':
+        self.scratchpad += f'\nObservation: '
+        if action_type == 'Finish':
             self.answer = argument
             if self.is_correct():
-                self.scratchpad += 'الاجابة صحيحة'
+                self.scratchpad += 'Answer is CORRECT'
             else: 
-                self.scratchpad += 'الاجابة خاطئة'
+                self.scratchpad += 'Answer is INCORRECT'
             self.finished = True
             return
         else:
-            print(' إجراء غير صالح، يرجى المحاولة مرة أخرى')
+            print('Invalid action type, please try again.')
     
     def reflect(self,
                 strategy: ReflexionStrategy) -> None:
