@@ -135,4 +135,4 @@ scratch/
 
 .DS_Store/
 
-constants.py
+reflexion/hotpotqa_runs/constants.py
