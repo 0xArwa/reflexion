@@ -21,7 +21,7 @@ from prompts import cot_agent_prompt, cot_reflect_agent_prompt, cot_reflect_prom
 from fewshots import WEBTHINK_SIMPLE6, REFLECTIONS, COT, COT_REFLECT
 
 
-API_KEY = "#####"
+
 
 class ReflexionStrategy(Enum):
     """
@@ -178,7 +178,7 @@ class ReactAgent:
                                             max_tokens=100,
                                             model_name="gpt-3.5-turbo",
                                             model_kwargs={"stop": "\n"},
-                                            openai_api_key=os.environ['OPENAI_API_KEY']),
+                                            openai_api_key=API_KEY),
                  ) -> None:
         
         self.question = question
@@ -288,12 +288,12 @@ class ReactReflectAgent(ReactAgent):
                                              max_tokens=100,
                                              model_name="gpt-3.5-turbo",
                                              model_kwargs={"stop": "\n"},
-                                             openai_api_key=os.environ['OPENAI_API_KEY']),
+                                             openai_api_key=API_KEY),
                  reflect_llm: AnyOpenAILLM = AnyOpenAILLM(
                                                temperature=0,
                                                max_tokens=250,
                                                model_name="gpt-3.5-turbo",
-                                               openai_api_key=os.environ['OPENAI_API_KEY']),
+                                               openai_api_key=API_KEY),
                  ) -> None:
         
         super().__init__(question, key, max_steps, agent_prompt, docstore, react_llm)
