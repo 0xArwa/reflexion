@@ -83,7 +83,7 @@ def parse_action(string):
 
 def normalize_answer(s):
   def remove_articles(text):
-    return re.sub(r"\b(a|an|the)\b", " ", text)
+    return re.sub(r"\b(a|an|the)\b", " ", text) # this line must be changed
   
   def white_space_fix(text):
       return " ".join(text.split())

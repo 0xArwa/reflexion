@@ -20,7 +20,7 @@ from prompts import reflect_prompt, react_agent_prompt, react_reflect_agent_prom
 from prompts import cot_agent_prompt, cot_reflect_agent_prompt, cot_reflect_prompt, COT_INSTRUCTION, COT_REFLECT_INSTRUCTION
 from fewshots import WEBTHINK_SIMPLE6, REFLECTIONS, COT, COT_REFLECT
 
-
+API_KEY = 'sk-proj-PnLK8zgtQNvcQlAGFvruT3BlbkFJIpLupgNboQ84mQOgx0k0'
 
 
 class ReflexionStrategy(Enum):

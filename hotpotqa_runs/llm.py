@@ -1,6 +1,6 @@
 from typing import Union, Literal
 from langchain.chat_models import ChatOpenAI
-from langchain import OpenAI
+from langchain import OpenAI # change to Ollama or another API
 from langchain.schema import (
     HumanMessage
 )
