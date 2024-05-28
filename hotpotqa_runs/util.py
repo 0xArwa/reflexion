@@ -7,8 +7,8 @@ def summarize_trial(agents):
     return correct, incorrect
 
 def remove_fewshot(prompt: str) -> str:
-    prefix = prompt.split('Here are some examples:')[0]
-    suffix = prompt.split('(END OF EXAMPLES)')[1]
+    prefix = prompt.split('يمكنك مراجعة بعض الأمثلة التالية:')[0]
+    suffix = prompt.split('(نهاية الامثلة)')[1]
     return prefix.strip('\n').strip() + '\n' +  suffix.strip('\n').strip()
 
 def log_trial(agents, trial_n):
@@ -28,7 +28,7 @@ Trial summary: Correct: {len(correct)}, Incorrect: {len(incorrect)}
     log += '------------- BEGIN INCORRECT AGENTS -----------\n\n'
     for agent in incorrect:
         log += remove_fewshot(agent._build_agent_prompt()) + f'\nCorrect answer: {agent.key}\n\n'
-
+ 
     return log
 
 def summarize_react_trial(agents):
