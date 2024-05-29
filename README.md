@@ -23,16 +23,3 @@ chainlit run main.py -w
 
  - `ReflexionStrategy.LAST_ATTEMPT_AND_REFLEXION` -  The agent is given both its reasoning trace and self-reflection on the last attempt as context.
 
-
-### Cite
-
-```bibtex
-@misc{shinn2023reflexion,
-      title={Reflexion: Language Agents with Verbal Reinforcement Learning}, 
-      author={Noah Shinn and Federico Cassano and Edward Berman and Ashwin Gopinath and Karthik Narasimhan and Shunyu Yao},
-      year={2023},
-      eprint={2303.11366},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI}
-}
-```
