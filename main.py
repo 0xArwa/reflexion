@@ -39,7 +39,7 @@ async def chain_of_thought(text):
 async def main(message: cl.Message):
     # custom logic goes here...
     conversation_log = ''
-    await cl.sleep(2)
+    await cl.sleep(0)
     captured_output = StringIO()
     original_stdout = sys.stdout
     sys.stdout = captured_output
