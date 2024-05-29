@@ -15,12 +15,12 @@ from langchain.schema import (
 from langchain.agents.react.base import DocstoreExplorer
 from langchain.docstore.base import Docstore
 from langchain.prompts import PromptTemplate
-from llm import AnyOpenAILLM
+from reasoning_runs.llm import AnyOpenAILLM 
 #from prompts import reflect_prompt, react_agent_prompt, react_reflect_agent_prompt, REFLECTION_HEADER, LAST_TRIAL_HEADER, REFLECTION_AFTER_LAST_TRIAL_HEADER
-from prompts_ar import cot_agent_prompt, cot_reflect_agent_prompt, cot_reflect_prompt, COT_INSTRUCTION, COT_REFLECT_INSTRUCTION, REFLECTION_HEADER, LAST_TRIAL_HEADER, REFLECTION_AFTER_LAST_TRIAL_HEADER
-from fewshots_ar import REFLECTIONS, COT, COT_REFLECT
+from reasoning_runs.prompts_ar import cot_agent_prompt, cot_reflect_agent_prompt, cot_reflect_prompt, COT_INSTRUCTION, COT_REFLECT_INSTRUCTION, REFLECTION_HEADER, LAST_TRIAL_HEADER, REFLECTION_AFTER_LAST_TRIAL_HEADER
+from reasoning_runs.fewshots_ar import REFLECTIONS, COT, COT_REFLECT
 
-
+API_KEY = ''
 
 
 class ReflexionStrategy(Enum):
@@ -116,6 +116,7 @@ class CoTAgent:
             return
         else:
             print('إجراء غير صالح.. يرجى المحاولة مرة أخرى')
+
     
     def reflect(self,
                 strategy: ReflexionStrategy) -> None:
@@ -199,7 +200,7 @@ def format_last_attempt(question: str,
 
 def truncate_scratchpad(scratchpad: str, n_tokens: int = 1600, tokenizer = gpt2_enc) -> str:
     lines = scratchpad.split('\n')
-    observations = filter(lambda x: x.startswith('Observation'), lines)
+    observations = filter(lambda x: x.startswith('ملاحظات'), lines)
     observations_by_tokens = sorted(observations, key=lambda x: len(tokenizer.encode(x)))
     while len(gpt2_enc.encode('\n'.join(lines))) > n_tokens:
         largest_observation = observations_by_tokens.pop(-1)
