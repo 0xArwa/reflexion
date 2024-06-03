@@ -7,7 +7,7 @@ The code now support arabic langugae processing and can be easily adapted with a
 
 **NOTE 1**: The project is currently running on OpenAI API since the finetuned model is in a private repo. <br>
 **NOTE 2**: The instruction dataset currently is not publicly available. <br>
-**NOTE 3**: assign your API key in the agent_ar.py to try our project. <br>
+**NOTE 3**: assign your API key in the agents_ar.py to try our project. <br>
 
 #### Setup
 
