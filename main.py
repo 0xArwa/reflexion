@@ -32,6 +32,8 @@ def extract_ans_text(text):
 @cl.step
 async def chain_of_thought(text):
     # Simulate a running task
+    
+   
     return  extract_thought(text.split('تفكير :')[1])
 
 
@@ -62,11 +64,14 @@ async def main(message: cl.Message):
         sys.stdout = original_stdout
         conversation_log = captured_output.getvalue().strip()
         #print(conversation_log)
+
+        #print(conversation_log)
     except Exception:
         print('Intializing the agent failed : ', Exception)
 
     # Send a response back to the user
     tool_res = await chain_of_thought(conversation_log)
+    #print(conversation_log)
     output = extract_ans_text(extract_ans(conversation_log.split('الرد:')[1]))
     await cl.Message(
         content=f"{output}",
