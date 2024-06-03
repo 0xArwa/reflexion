@@ -2,7 +2,12 @@
 
 This repo is based on the original Reflexion framwork [Reflexion: Language Agents with Verbal Reinforcement Learning](https://arxiv.org/abs/2303.11366) by Noah Shinn, Federico Cassano, Edward Berman, Ashwin Gopinath, Karthik Narasimhan, Shunyu Yao. 
 
-This project specifically targets reasoning tasks tailored for Arabic language by adapting self-reflecting agents.
+This project specifically targets reasoning tasks tailored for Arabic language by adapting self-reflecting agents. <br>
+The code now support arabic langugae processing and can be easily adapted with an API endpoint. 
+
+**NOTE 1**: The project is currently running on OpenAI API since the finetuned model is in a private repo. <br>
+**NOTE 2**: The instruction dataset currently is not publicly available. <br>
+**NOTE 3**: assign your API key in the agent_ar.py to try our project. <br>
 
 #### Setup
 
